@@ -76,11 +76,34 @@ def _print(mode: str, res: EvalResult) -> None:
     print()
 
 
+def _print_comparison(det: EvalResult, agt: EvalResult) -> None:
+    print(f"\n{'=' * 66}\nLeakSentry eval - deterministic baseline  vs  + Gemini judgment"
+          f"\n{'=' * 66}")
+    rows = [
+        ["Precision", f"{det.precision:.3f}", f"{agt.precision:.3f}"],
+        ["Recall", f"{det.recall:.3f}", f"{agt.recall:.3f}"],
+        ["F1", f"{det.f1:.3f}", f"{agt.f1:.3f}"],
+        ["Dollar-recall", f"{det.dollar_recall:.1%}", f"{agt.dollar_recall:.1%}"],
+        ["False-positive rate", f"{det.fp_rate:.3f}", f"{agt.fp_rate:.3f}"],
+        ["True positives", det.tp, agt.tp],
+        ["False positives", det.fp, agt.fp],
+        ["False negatives", det.fn, agt.fn],
+    ]
+    print(tabulate(rows, headers=["metric", "deterministic", "+ judgment"], tablefmt="github"))
+    print(f"\n  True leak dollars: ${det.true_dollars:,.2f} across "
+          f"{det.tp + det.fn} injected leaks.")
+    print(f"  The judgment layer cleared {det.fp - agt.fp} amendment-noise false "
+          f"positives, lifting precision {det.precision:.3f} -> {agt.precision:.3f}.\n")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=["deterministic", "agents"], default="deterministic")
+    ap.add_argument("--mode", choices=["deterministic", "agents", "both"], default="both")
     args = ap.parse_args()
 
+    if args.mode == "both":
+        _print_comparison(score(_deterministic_findings()), score(_agent_findings()))
+        return
     found = _deterministic_findings() if args.mode == "deterministic" else _agent_findings()
     _print(args.mode, score(found))
 

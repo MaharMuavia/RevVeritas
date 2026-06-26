@@ -28,9 +28,12 @@ eval:
 backend:
 	uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
 
-# Full demo: seeds data then launches everything. Wired up in build step 9.
-demo:
-	@echo "TODO(step 9): seed data + docker-compose up (backend + dashboard)."
+# Full demo: seed the dataset, then launch API + dashboard at localhost:8000.
+demo: data
+	@echo ""
+	@echo "  LeakSentry is starting at http://localhost:8000  — click 'Run Audit'."
+	@echo ""
+	uvicorn backend.main:app --host 0.0.0.0 --port 8000
 
 clean:
 	rm -f data/*.csv leaksentry.db traces/*.jsonl

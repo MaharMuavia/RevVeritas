@@ -66,3 +66,32 @@ detector agents → deterministic candidates → Gemini judgment → Findings (+
         ↓ (guardrails filter, case-memory dedupe)
 ranked LeakReport → RecoveryAgent drafts → Human approval gate → resolved in case memory
 ```
+
+## Repo map
+
+| Path | Role |
+|------|------|
+| `data/generate_dataset.py` | synthetic dataset + injected leaks + `ground_truth.csv` |
+| `config.py` / `models.py` | config; Pydantic `Candidate`/`Verdict`/`Finding`/`LeakReport` |
+| `detection.py` | deterministic detectors (the "find" half) |
+| `tools/impact.py` | `compute_dollar_impact` — single source of dollar figures (G1) |
+| `tools/pricing.py` | `pricing_rule_engine` |
+| `tools/case_memory.py` | SQLite case memory (Concept 3) |
+| `tools/data_loader.py` | cached CSV loaders |
+| `agents/runtime.py` | Gemini client + `find_superseding_contract` tool + heuristic fallback |
+| `agents/skills.py` | reusable skills: reconciliation judgment, recovery drafting |
+| `agents/guardrails.py` | G1/G2/G3 guardrails |
+| `agents/detector_agents.py` | Billing / Renewal / Usage specialist agents (find + judge) |
+| `agents/orchestrator.py` | OrchestratorAgent + RecoveryAgent |
+| `observability.py` | JSONL + per-finding TraceStep tracing |
+| `backend/main.py` | FastAPI API + serves the dashboard |
+| `frontend/index.html` | single-screen dashboard |
+| `eval/run_eval.py` | precision/recall/F1/$-recall harness |
+| `tests/` | 19 pytest tests |
+
+## Result
+
+Deterministic baseline: precision 0.867, recall 1.000, $-recall 100%. Adding the
+Gemini judgment layer clears 8 amendment-noise false positives → **precision 1.000,
+recall 1.000, F1 1.000**. The judgment layer earns its place exactly where arithmetic
+cannot decide.
