@@ -1,6 +1,18 @@
-# LeakSentry — 3-Minute Demo Script
+# RevVeritas — Demo Script (records in ~3:00, hard cap 5:00)
 
-The exact walkthrough to record. Total target ~3:00.
+The exact walkthrough to record. Total target ~3:00, leaving comfortable margin under
+Kaggle's 5-minute limit. If you slip, the **Guardrails** beat (1:50–2:25) is the only one
+you may trim — the problem, the wow, and the gate must stay.
+
+## Recording cues (read before you hit record)
+- **Resolution:** record at 1080p; the dashboard is light-themed, so a light desktop
+  background reads cleanly.
+- **Zoom:** browser at ~125% so the headline number and trace text are legible on YouTube.
+- **Cursor:** move deliberately and pause ~1s on each thing you name — fast clicks read as
+  nervous on video.
+- **Audio:** one continuous voice-over; the beat sheet doubles as your script.
+- **First frame matters:** start on the landing page (it's also your cover-image source),
+  not a terminal.
 
 ## Setup (before recording)
 - [ ] `python data/generate_dataset.py` has run (CSVs + `ground_truth.csv` present).
@@ -54,3 +66,13 @@ against labeled ground truth."*
 - "The LLM is used only where judgment lives; the math stays in Python."
 - "Case memory means it never re-flags a leak you already resolved."
 - "Nothing is ever sent. A human approves every recovery action."
+
+## Publishing to YouTube (submission requirement)
+- Upload the file, then set visibility to **Public** (not Private; Unlisted is risky —
+  judges must be able to open it without a sign-in). The Kaggle requirement is a public,
+  no-login link.
+- **Title:** `RevVeritas — Autonomous Revenue-Leakage Hunter (Kaggle AI Agents Capstone)`
+- **Description:** one-line pitch + repo link `https://github.com/MaharMuavia/RevVeritas`.
+- Confirm length is **≤ 5:00** before publishing.
+- Paste the final YouTube URL into the Kaggle Writeup's Media Gallery **and** keep a copy
+  for the "Attached Public Video" field.

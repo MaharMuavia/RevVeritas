@@ -1,4 +1,4 @@
-"""LeakSentry FastAPI backend.
+"""RevVeritas FastAPI backend.
 
 Async app exposing audit, findings, reasoning-trace, and human-approval
 endpoints; every agent step is logged to a JSONL trace file. Populated in

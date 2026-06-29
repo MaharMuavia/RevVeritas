@@ -1,0 +1,12 @@
+{
+  "name": "revveritas",
+  "version": "1.0.0",
+  "description": "Autonomous Revenue Leakage Hunter",
+  "main": "backend/main.py",
+  "scripts": {
+    "dev": "uvicorn backend.main:app --reload"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}

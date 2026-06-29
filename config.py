@@ -1,4 +1,4 @@
-"""Central configuration for LeakSentry. Reads from the environment (.env)."""
+"""Central configuration for RevVeritas. Reads from the environment (.env)."""
 from __future__ import annotations
 
 import os
@@ -25,9 +25,9 @@ GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
 USE_GEMINI = bool(GEMINI_API_KEY)
 
 # ---- Persistence / observability ----
-DB_URL = os.getenv("LEAKSENTRY_DB_URL", f"sqlite:///{os.path.join(ROOT, 'leaksentry.db')}")
-TRACE_FILE = os.getenv("LEAKSENTRY_TRACE_FILE", os.path.join(ROOT, "traces", "agent_trace.jsonl"))
+DB_URL = os.getenv("REVVERITAS_DB_URL", os.getenv("LEAKSENTRY_DB_URL", f"sqlite:///{os.path.join(ROOT, 'revveritas.db')}"))
+TRACE_FILE = os.getenv("REVVERITAS_TRACE_FILE", os.getenv("LEAKSENTRY_TRACE_FILE", os.path.join(ROOT, "traces", "agent_trace.jsonl")))
 
 # ---- Guardrails ----
-CONFIDENCE_THRESHOLD = float(os.getenv("LEAKSENTRY_CONFIDENCE_THRESHOLD", "0.6"))
+CONFIDENCE_THRESHOLD = float(os.getenv("REVVERITAS_CONFIDENCE_THRESHOLD", os.getenv("LEAKSENTRY_CONFIDENCE_THRESHOLD", "0.6")))
 ROUNDING_THRESHOLD = 1.00          # discrepancies below $1 are treated as noise

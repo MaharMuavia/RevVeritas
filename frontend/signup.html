@@ -3,10 +3,33 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Create account · LeakSentry</title>
+<title>Create account · RevVeritas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/theme.css" />
+<style>
+  .auth-card {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: authReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .auth-aside {
+    opacity: 0;
+    animation: asideFade 0.8s ease forwards;
+  }
+  @keyframes authReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes asideFade {
+    to { opacity: 1; }
+  }
+  .field input {
+    transition: all 0.2s ease;
+  }
+  .field input:hover {
+    border-color: var(--gold);
+  }
+</style>
 </head>
 <body>
 <div class="auth-wrap">
@@ -18,7 +41,7 @@
         <path d="M16 11 C13 14 13 17 16 21 C19 17 19 14 16 11Z" fill="#fff"/>
         <circle cx="16" cy="24" r="1.5" fill="#fff"/>
       </svg>
-      <div><h1 style="color:#fff">LeakSentry</h1><div class="sub" style="color:rgba(255,255,255,.7)">Revenue Leakage Audit</div></div>
+      <div><h1 style="color:#fff">RevVeritas</h1><div class="sub" style="color:rgba(255,255,255,.7)">Revenue Leakage Audit</div></div>
     </a>
     <div style="position:absolute;bottom:46px;left:46px;right:46px;z-index:2">
       <div class="serif" style="font-size:29px;font-weight:600;line-height:1.14;letter-spacing:-.01em">
@@ -48,7 +71,7 @@
   </main>
 </div>
 <script>
-  function setUser(name){ try{ localStorage.setItem('leaksentry_user', name); }catch(e){} location.href='/app'; }
+  function setUser(name){ try{ localStorage.setItem('revveritas_user', name); }catch(e){} location.href='/app'; }
   function go(e){ e.preventDefault(); const nm=document.getElementById('name').value.trim(); setUser(nm||'Member'); return false; }
   function guest(){ setUser('Guest'); }
 </script>

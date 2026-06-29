@@ -1,6 +1,6 @@
-# LeakSentry — Architecture
+# RevVeritas — Architecture
 
-> Status: skeleton (build step 1). Expanded as modules land.
+> Status: complete. All build steps landed.
 
 ## Design philosophy
 
@@ -55,7 +55,8 @@ Agents pass structured **Pydantic** objects (`Finding`, `LeakReport`), never raw
 
 ### Backend (`backend/`) + Frontend (`frontend/`)
 - FastAPI async app exposes audit + findings + approval endpoints.
-- Single-screen Next.js + Tailwind + shadcn/ui dashboard with the human-approval gate.
+- Single-screen, zero-build dashboard (vanilla HTML/CSS/JS served by FastAPI) with
+  the human-approval gate — no `npm install`, one command brings up the whole demo.
 
 ## Data flow (one audit)
 
@@ -87,7 +88,7 @@ ranked LeakReport → RecoveryAgent drafts → Human approval gate → resolved 
 | `backend/main.py` | FastAPI API + serves the dashboard |
 | `frontend/index.html` | single-screen dashboard |
 | `eval/run_eval.py` | precision/recall/F1/$-recall harness |
-| `tests/` | 19 pytest tests |
+| `tests/` | 20 pytest tests |
 
 ## Result
 

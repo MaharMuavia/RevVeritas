@@ -1,10 +1,10 @@
-# LeakSentry — developer commands
+# RevVeritas — developer commands
 # NOTE: targets are wired up incrementally as build steps land.
 
 .PHONY: help install data eval test backend demo clean
 
 help:
-	@echo "LeakSentry make targets:"
+	@echo "RevVeritas make targets:"
 	@echo "  install   Install Python dependencies"
 	@echo "  data      Generate synthetic dataset + ground truth   (step 2)"
 	@echo "  test      Run pytest suite                            (step 3+)"
@@ -31,10 +31,10 @@ backend:
 # Full demo: seed the dataset, then launch API + dashboard at localhost:8000.
 demo: data
 	@echo ""
-	@echo "  LeakSentry is starting at http://localhost:8000  — click 'Run Audit'."
+	@echo "  RevVeritas is starting at http://localhost:8000  — click 'Run Audit'."
 	@echo ""
 	uvicorn backend.main:app --host 0.0.0.0 --port 8000
 
 clean:
-	rm -f data/*.csv leaksentry.db traces/*.jsonl
+	rm -f data/*.csv revveritas.db traces/*.jsonl
 	rm -rf __pycache__ .pytest_cache .ruff_cache

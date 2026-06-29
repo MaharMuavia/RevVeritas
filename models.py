@@ -1,4 +1,4 @@
-"""Shared Pydantic models passed between LeakSentry agents.
+"""Shared Pydantic models passed between RevVeritas agents.
 
 Concept 2 (multi-agent): agents communicate with these structured objects, never
 raw strings. A `Candidate` is a deterministic discrepancy; a `Verdict` is the

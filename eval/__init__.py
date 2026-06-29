@@ -1,4 +1,4 @@
-"""LeakSentry eval harness.
+"""RevVeritas eval harness.
 
 Concept 4: Quality & guardrails + evals. `run_eval.py` runs the full pipeline
 against the synthetic data and reports precision, recall, F1, dollar-recall, and

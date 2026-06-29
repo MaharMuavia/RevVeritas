@@ -1,4 +1,4 @@
-"""LeakSentry tools layer — functions Gemini can call.
+"""RevVeritas tools layer — functions Gemini can call.
 
 Concept 1: Tools & API integration. All dollar math is deterministic; the LLM
 may explain a figure but never computes it (Guardrail 1).

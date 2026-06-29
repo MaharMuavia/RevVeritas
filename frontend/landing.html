@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LeakSentry — Autonomous Revenue Leakage Hunter</title>
+<title>RevVeritas — Autonomous Revenue Leakage Hunter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/theme.css" />
@@ -11,8 +11,8 @@
   .wrap{max-width:1180px; margin:0 auto; padding:0 28px}
   nav.top{display:flex; align-items:center; gap:16px; padding:20px 28px; max-width:1180px; margin:0 auto}
   nav .links{display:flex; align-items:center; gap:8px; margin-left:auto}
-  .nav-pill{font-size:13px; color:var(--muted); padding:9px 14px; border-radius:9px; transition:.15s}
-  .nav-pill:hover{color:var(--ink); background:#fff}
+  .nav-pill{font-size:13px; color:var(--muted); padding:9px 14px; border-radius:999px; transition:.2s ease}
+  .nav-pill:hover{color:var(--ink); background:#fff; transform:translateY(-1px); box-shadow:var(--shadow-sm)}
 
   .hero{display:grid; grid-template-columns:1.08fr .92fr; gap:50px; align-items:center; padding:54px 0 40px}
   .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:.06em; color:var(--green-deep);
@@ -29,7 +29,8 @@
 
   /* reconciliation visual */
   .viz{position:relative}
-  .viz .card-vz{padding:26px}
+  .viz .card-vz{padding:26px; transition:transform .3s ease, box-shadow .3s ease}
+  .viz .card-vz:hover{transform:translateY(-4px); box-shadow:var(--shadow-lg)}
   .srcrow{display:flex; align-items:center; gap:12px; padding:13px 15px; border:1px solid var(--line); border-radius:12px;
     margin-bottom:11px; background:var(--paper-2); position:relative}
   .srcrow .ic{width:34px;height:34px;border-radius:9px; display:grid; place-items:center; flex:0 0 auto; color:#fff; font-weight:700; font-size:13px}
@@ -45,13 +46,16 @@
   .feat h3.sec{font-family:"Fraunces",serif; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-2); text-align:center}
   .feat h4.sec{font-family:"Fraunces",serif; font-size:30px; color:var(--ink); text-align:center; margin:8px 0 36px; font-weight:600}
   .grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:18px}
-  .fcard{padding:22px}
+  .fcard{padding:22px; transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease}
+  .fcard:hover{transform:translateY(-4px); border-color:var(--gold); box-shadow:var(--shadow-lg)}
   .fcard .fi{width:38px;height:38px;border-radius:10px; display:grid; place-items:center; font-size:18px; margin-bottom:14px}
   .fcard h5{font-size:15px; color:var(--ink); font-weight:600; margin-bottom:7px}
   .fcard p{font-size:13px; color:var(--muted); line-height:1.55}
 
   .resultbar{display:flex; align-items:center; gap:30px; padding:26px 32px; margin:18px 0 0; flex-wrap:wrap;
-    background:linear-gradient(120deg,#0b7a52,#0f9d6b); color:#fff; border-radius:18px; box-shadow:var(--shadow)}
+    background:linear-gradient(120deg,#0b7a52,#0f9d6b); color:#fff; border-radius:18px; box-shadow:var(--shadow);
+    transition:transform .3s ease}
+  .resultbar:hover{transform:scale(1.01)}
   .resultbar .big{font-family:"Fraunces",serif; font-size:34px; font-weight:600}
   .resultbar .lab{font-size:13px; opacity:.85}
   .resultbar .m{display:flex; gap:24px; margin-left:auto; flex-wrap:wrap}
@@ -59,7 +63,7 @@
   .resultbar .m div span{font-size:11px; opacity:.82; letter-spacing:.04em}
 
   footer{padding:40px 0 56px; color:var(--faint); font-size:13px; text-align:center; border-top:1px solid var(--line); margin-top:50px}
-  .reveal{opacity:0; transform:translateY(16px); animation:rise .7s forwards}
+  .reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(0.16, 1, 0.3, 1) forwards}
   @keyframes rise{to{opacity:1; transform:none}}
   @media(max-width:900px){.hero{grid-template-columns:1fr; gap:34px} .grid4{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.grid4{grid-template-columns:1fr}}
@@ -73,7 +77,7 @@
       <path d="M16 11 C13 14 13 17 16 21 C19 17 19 14 16 11Z" fill="var(--t-overage)"/>
       <circle cx="16" cy="24" r="1.5" fill="var(--gold)"/>
     </svg>
-    <div><h1>LeakSentry</h1><div class="sub">Revenue Leakage Audit</div></div>
+    <div><h1>RevVeritas</h1><div class="sub">Revenue Leakage Audit</div></div>
   </a>
   <div class="links">
     <a class="nav-pill" href="/signin">Sign in</a>
@@ -86,11 +90,11 @@
     <div>
       <span class="eyebrow reveal">● Multi-agent · powered by Google Gemini</span>
       <h2 class="reveal" style="animation-delay:.05s">Find the revenue<br/>you're <em>silently losing.</em></h2>
-      <p class="lead reveal" style="animation-delay:.1s">LeakSentry is an autonomous multi-agent auditor that reconciles your
+      <p class="lead reveal" style="animation-delay:.1s">RevVeritas is an autonomous multi-agent auditor that reconciles your
         <b>contracts</b>, <b>invoices</b>, and <b>usage</b> — three systems that never quite agree — to surface under-billing,
         expired discounts, missed renewals and unbilled overages, quantify each one in dollars, and draft the recovery behind a human-approval gate.</p>
       <div class="cta reveal" style="animation-delay:.15s">
-        <a class="btn btn-primary" href="/app">Continue as guest →</a>
+        <a class="btn btn-primary" href="javascript:void(0)" onclick="guest()">Continue as guest →</a>
         <a class="btn btn-ghost" href="/signup">Create an account</a>
       </div>
       <div class="stat-row reveal" style="animation-delay:.2s">
@@ -135,7 +139,15 @@
 
 <footer>
   <div class="wrap">MIT-licensed · built for the Kaggle AI Agents Capstone (Agents for Business) ·
-  <a href="https://github.com/MaharMuavia/LeakSentry" style="color:var(--green-deep);font-weight:600">github.com/MaharMuavia/LeakSentry</a></div>
+  <a href="https://github.com/MaharMuavia/RevVeritas" style="color:var(--green-deep);font-weight:600">github.com/MaharMuavia/RevVeritas</a></div>
 </footer>
+<script>
+  function guest() {
+    try {
+      localStorage.setItem('revveritas_user', 'Guest');
+    } catch(e) {}
+    location.href = '/app';
+  }
+</script>
 </body>
 </html>

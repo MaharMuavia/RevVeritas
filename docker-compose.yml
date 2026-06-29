@@ -1,16 +1,16 @@
-# LeakSentry — one-command demo.
+# RevVeritas — one-command demo.
 #   docker compose up --build      → http://localhost:8000  (click "Run Audit")
 #
 # Runs with no API key (deterministic heuristic judge). To use live Gemini
 # judgment, put GEMINI_API_KEY in a local .env file (compose reads it automatically).
 services:
-  leaksentry:
+  revveritas:
     build: .
-    container_name: leaksentry
+    container_name: revveritas
     ports:
       - "8000:8000"
     environment:
       GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
       GEMINI_MODEL: "${GEMINI_MODEL:-gemini-2.5-flash}"
-      LEAKSENTRY_CONFIDENCE_THRESHOLD: "${LEAKSENTRY_CONFIDENCE_THRESHOLD:-0.6}"
+      REVVERITAS_CONFIDENCE_THRESHOLD: "${REVVERITAS_CONFIDENCE_THRESHOLD:-0.6}"
     restart: unless-stopped

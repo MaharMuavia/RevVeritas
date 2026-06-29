@@ -1,4 +1,4 @@
-"""LeakSentry eval harness (Concept 4).
+"""RevVeritas eval harness (Concept 4).
 
 Runs the pipeline against the synthetic data and reports precision / recall / F1 /
 dollar-recall / false-positive rate vs `data/ground_truth.csv`.
@@ -51,7 +51,7 @@ def _agent_findings() -> list[dict]:
 
 
 def _print(mode: str, res: EvalResult) -> None:
-    print(f"\n{'=' * 60}\nLeakSentry eval - mode: {mode}\n{'=' * 60}")
+    print(f"\n{'=' * 60}\nRevVeritas eval - mode: {mode}\n{'=' * 60}")
     rows = [
         ["Precision", f"{res.precision:.3f}"],
         ["Recall", f"{res.recall:.3f}"],
@@ -77,7 +77,7 @@ def _print(mode: str, res: EvalResult) -> None:
 
 
 def _print_comparison(det: EvalResult, agt: EvalResult) -> None:
-    print(f"\n{'=' * 66}\nLeakSentry eval - deterministic baseline  vs  + Gemini judgment"
+    print(f"\n{'=' * 66}\nRevVeritas eval - deterministic baseline  vs  + Gemini judgment"
           f"\n{'=' * 66}")
     rows = [
         ["Precision", f"{det.precision:.3f}", f"{agt.precision:.3f}"],

@@ -1,4 +1,4 @@
-"""Synthetic dataset generator for LeakSentry (build step 2).
+"""Synthetic dataset generator for RevVeritas (build step 2).
 
 Generates a realistic, internally-INCONSISTENT dataset for the fictional B2B SaaS
 company "Northwind Cloud", then INJECTS five revenue-leak archetypes plus

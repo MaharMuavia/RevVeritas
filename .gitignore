@@ -23,6 +23,7 @@ htmlcov/
 # ---- Data artifacts (generated) ----
 # Source generators are tracked; generated CSVs/DB/traces are not.
 data/*.csv
+data/uploads/
 !data/.gitkeep
 *.sqlite
 *.db

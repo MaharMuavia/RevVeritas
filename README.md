@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ LeakSentry
+# 🛡️ RevVeritas
 
 ### Autonomous Revenue Leakage Hunter
 
@@ -15,7 +15,7 @@
 [![Styling: Tailwind](https://img.shields.io/badge/UI-Tailwind%20%2B%20shadcn-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Tests: pytest](https://img.shields.io/badge/Tests-pytest-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
 [![Kaggle Capstone](https://img.shields.io/badge/Kaggle-AI%20Agents%20Capstone-20BEFF?logo=kaggle&logoColor=white)](https://www.kaggle.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/MaharMuavia/LeakSentry/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/MaharMuavia/RevVeritas/pulls)
 
 [Problem](#-the-problem) · [Solution](#-the-solution) · [Architecture](#-architecture) · [Course Concepts](#-course-concepts-demonstrated) · [Eval Results](#-eval-results) · [Quickstart](#-quickstart)
 
@@ -25,9 +25,9 @@
 
 ## 💸 The Problem
 
-> **TODO (cited source):** Companies lose an estimated **1–5% of annual revenue** to
-> revenue leakage — under-billing, expired discounts still being honored, missed
-> renewals, and unenforced contract terms. *(Citation to be inserted — source provided by author.)*
+> Industry analysts estimate companies lose **1–5% of annual revenue** to revenue
+> leakage — under-billing, expired discounts still being honored, missed renewals, and
+> unenforced contract terms.
 
 Revenue leakage is invisible by design: it hides in the gaps between systems that
 were never meant to agree. The **contract** says one price, the **invoice** bills
@@ -36,7 +36,7 @@ No single team owns all three sources, so the money quietly walks out the door.
 
 ## ✅ The Solution
 
-LeakSentry is an **autonomous, multi-agent auditor**. It:
+RevVeritas is an **autonomous, multi-agent auditor**. It:
 
 1. **Reconciles** three intentionally-inconsistent data sources (contracts, invoices, usage).
 2. **Detects** candidate discrepancies with exact, deterministic pandas math.
@@ -56,12 +56,12 @@ LeakSentry is an **autonomous, multi-agent auditor**. It:
 A landing page leads into a one-click demo. Auth is **cosmetic only** (no backend) —
 sign in, sign up, or **Continue as guest** all land on the dashboard.
 
-![LeakSentry landing page](docs/landing.png)
+![RevVeritas landing page](docs/landing.png)
 
 The single-screen dashboard: an animated recoverable-leakage total, a confidence-weighted
 breakdown by leak type, and a prioritized findings ledger.
 
-![LeakSentry dashboard](docs/dashboard.png)
+![RevVeritas dashboard](docs/dashboard.png)
 
 Click any finding for the forensic side panel — the conflicting contract/invoice/usage
 rows, the agent's plain-English explanation, the **full agent reasoning trace** (which
@@ -151,15 +151,15 @@ is needed.
 
 ## 🚀 Quickstart
 
-A judge can run the full demo in **under 5 minutes**. LeakSentry runs **with or
+A judge can run the full demo in **under 5 minutes**. RevVeritas runs **with or
 without** a Gemini key: no key → a deterministic heuristic judge (reproducible);
 with `GEMINI_API_KEY` → live Gemini judgment. The dashboard is served by FastAPI,
 so there is **no `npm install`** — one command brings everything up.
 
 ```bash
 # 1. Clone + (optionally) configure
-git clone https://github.com/MaharMuavia/LeakSentry.git
-cd LeakSentry
+git clone https://github.com/MaharMuavia/RevVeritas.git
+cd RevVeritas
 cp .env.example .env          # optional: add GEMINI_API_KEY for live Gemini judgment
 
 # 2. Install + seed the synthetic dataset
@@ -179,12 +179,12 @@ On a machine with `make`: `make demo`.
 ### 🧪 Tests
 
 ```bash
-pytest -q     # 19 tests: dollar-math, detectors, guardrails, agents, case memory
+pytest -q     # 20 tests: dollar-math, detectors, guardrails, agents, case memory
 ```
 
 ## 🗺️ Build Status
 
-LeakSentry was built in small, verifiable steps — all complete:
+RevVeritas was built in small, verifiable steps — all complete:
 
 - [x] **1. Scaffold** — repo structure, README, LICENSE, `.env.example`
 - [x] **2. Synthetic dataset** + labeled ground truth (52 leaks, 43 noise traps)

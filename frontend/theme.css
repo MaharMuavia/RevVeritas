@@ -1,5 +1,5 @@
-/* LeakSentry — shared light design system ("financial paper / refined audit") */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+/* RevVeritas — shared light design system ("financial paper / refined audit") */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root{
   --paper:#f5f4ef; --paper-2:#faf9f5; --card:#ffffff;
@@ -39,29 +39,30 @@ body.bg-atmos::after{
 a{color:inherit; text-decoration:none}
 
 /* ---- brand mark ---- */
-.brand{display:flex; align-items:center; gap:11px}
+.brand{display:flex; align-items:center; gap:11px; transition:transform 0.2s ease}
+.brand:hover{transform:scale(1.02)}
 .mark{width:30px;height:30px;flex:0 0 auto}
 .brand h1{font-size:19px; font-weight:600; letter-spacing:-.01em; color:var(--ink)}
 .brand .sub{font-size:10.5px; color:var(--faint); letter-spacing:.17em; text-transform:uppercase}
 
 /* ---- buttons ---- */
 .btn{font-family:inherit; font-weight:600; font-size:14px; border-radius:11px; padding:12px 20px;
-  cursor:pointer; border:1px solid transparent; transition:transform .15s, box-shadow .2s, background .2s;
+  cursor:pointer; border:1px solid transparent; transition:transform .15s, box-shadow .2s, background .2s, border-color .2s;
   display:inline-flex; align-items:center; gap:9px; white-space:nowrap}
 .btn-primary{color:#fff; background:linear-gradient(180deg,var(--green),var(--green-deep));
   box-shadow:0 10px 22px -10px rgba(15,157,107,.6)}
-.btn-primary:hover{transform:translateY(-1px); box-shadow:0 14px 28px -10px rgba(15,157,107,.72)}
+.btn-primary:hover{transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(15,157,107,.72)}
 .btn-gold{color:#3a2c08; background:linear-gradient(180deg,#e7c463,var(--gold));
   box-shadow:0 10px 22px -10px rgba(182,137,43,.6)}
-.btn-gold:hover{transform:translateY(-1px)}
+.btn-gold:hover{transform:translateY(-2px); box-shadow:0 14px 28px -10px rgba(182,137,43,.72)}
 .btn-ghost{color:var(--ink); background:var(--card); border-color:var(--line); box-shadow:var(--shadow-sm)}
-.btn-ghost:hover{border-color:var(--gold); color:var(--gold-2)}
-.btn-link{background:none; color:var(--muted); padding:12px 8px}
+.btn-ghost:hover{border-color:var(--gold); color:var(--gold-2); transform:translateY(-1px); box-shadow:var(--shadow-sm)}
+.btn-link{background:none; color:var(--muted); padding:12px 8px; transition:color 0.2s}
 .btn-link:hover{color:var(--green-deep)}
 .btn:disabled{opacity:.6; cursor:wait; transform:none}
 
 /* ---- panel / pill ---- */
-.panel{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+.panel{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); transition:box-shadow .3s ease, border-color .3s ease}
 .pill{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600;
   padding:4px 10px; border-radius:999px; letter-spacing:.02em}
 .pill .swatch{width:7px;height:7px;border-radius:50%}
@@ -79,7 +80,7 @@ a{color:inherit; text-decoration:none}
   background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);
   background-size:34px 34px; mask-image:radial-gradient(circle at 70% 20%,#000,transparent 75%)}
 .auth-aside .glow{position:absolute; width:420px;height:420px; border-radius:50%; right:-120px; top:-120px;
-  background:radial-gradient(circle,rgba(244,234,208,.4),transparent 65%)}
+  background:radial-gradient(circle,rgba(244,234,208,.4),transparent 65%); animation:pulseGlow 8s infinite ease-in-out}
 .auth-main{display:flex; align-items:center; justify-content:center; padding:40px; background:var(--paper)}
 .auth-card{width:100%; max-width:392px}
 .auth-card h2{font-family:"Fraunces",serif; font-weight:600; font-size:27px; color:var(--ink); letter-spacing:-.01em}
@@ -95,4 +96,38 @@ a{color:inherit; text-decoration:none}
 .guest{width:100%; justify-content:center; margin-top:2px}
 .auth-foot{text-align:center; font-size:13px; color:var(--muted); margin-top:22px}
 .auth-foot a{color:var(--green-deep); font-weight:600}
+
+/* ---- animations ---- */
+@keyframes pulseGlow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes scannerLine {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+/* scanner overlay */
+.loading-veil .scanner {
+  position: relative;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.loading-veil .scanner::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  box-shadow: 0 0 8px var(--green);
+  animation: scannerLine 3s infinite linear;
+}
+
 @media(max-width:860px){.auth-wrap{grid-template-columns:1fr} .auth-aside{display:none}}

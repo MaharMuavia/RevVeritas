@@ -1,4 +1,4 @@
-"""LeakSentry agent layer — Orchestrator + specialist sub-agents.
+"""RevVeritas agent layer — Orchestrator + specialist sub-agents.
 
 Concept 2: Multi-agent / agent-to-agent. Agents pass structured Pydantic
 objects (never raw strings) and each drives a Gemini function-calling loop.

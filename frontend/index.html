@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dashboard · LeakSentry</title>
+<title>Dashboard · RevVeritas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="/theme.css" />
@@ -22,7 +22,7 @@
     background:linear-gradient(180deg,var(--green),var(--green-deep)); border:none; border-radius:10px; padding:11px 20px;
     cursor:pointer; display:flex; align-items:center; gap:9px; transition:transform .15s, box-shadow .2s;
     box-shadow:0 10px 22px -10px rgba(15,157,107,.6)}
-  button.run:hover{transform:translateY(-1px)}
+  button.run:hover{transform:translateY(-1px); box-shadow: 0 12px 24px -8px rgba(15,157,107,.8)}
   button.run:disabled{opacity:.6; cursor:wait; transform:none}
   button.run .pulse{width:8px;height:8px;border-radius:50%;background:#fff}
   button.run.loading .pulse{animation:blink .8s infinite}
@@ -36,7 +36,9 @@
   .headline-sub{font-size:16px; color:var(--muted); margin-top:18px; max-width:46ch}
   .headline-sub b{color:var(--ink); font-weight:600}
   .chips{display:flex; gap:12px; margin-top:24px; flex-wrap:wrap}
-  .chip{border:1px solid var(--line); border-radius:12px; padding:12px 16px; background:#fff; box-shadow:var(--shadow-sm)}
+  .chip{border:1px solid var(--line); border-radius:12px; padding:12px 16px; background:#fff; box-shadow:var(--shadow-sm);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;}
+  .chip:hover{transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--gold);}
   .chip .k{font-size:11px; color:var(--faint); letter-spacing:.05em; text-transform:uppercase}
   .chip .v{font-size:18px; font-weight:600; margin-top:3px; color:var(--ink)}
   .chip.review .v{color:var(--amber)} .chip.noise .v{color:var(--slate)}
@@ -64,8 +66,8 @@
   thead th{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--faint);
     text-align:left; padding:0 14px 11px; font-weight:600; border-bottom:1px solid var(--line)}
   thead th.r, td.r{text-align:right}
-  tbody tr{cursor:pointer; transition:background .14s; border-bottom:1px solid var(--line-2)}
-  tbody tr:hover{background:var(--paper-2)}
+  tbody tr{cursor:pointer; transition:background .14s, transform .2s ease; border-bottom:1px solid var(--line-2)}
+  tbody tr:hover{background:var(--paper-2); transform: translateX(2px);}
   tbody td{padding:13px 14px; font-size:13.5px; vertical-align:middle}
   .rank{color:var(--faint); font-size:12px; width:34px}
   .cust{font-weight:600; color:var(--ink)}
@@ -79,6 +81,12 @@
   .stat.DISMISSED{color:#64748b; background:#eef1f4}
   .stat.RESOLVED{color:var(--sky); background:#dcf0fb}
 
+  /* tr transition animations */
+  @keyframes trReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* drawer */
   .scrim{position:fixed; inset:0; background:rgba(40,38,30,.34); backdrop-filter:blur(2px);
     opacity:0; pointer-events:none; transition:opacity .3s; z-index:40}
@@ -90,7 +98,7 @@
   .drawer .dhead{padding:24px 28px; border-bottom:1px solid var(--line); position:relative; background:#fff}
   .drawer .close{position:absolute; top:22px; right:24px; background:#fff; border:1px solid var(--line);
     color:var(--muted); width:32px;height:32px;border-radius:8px; cursor:pointer; font-size:15px; transition:.15s}
-  .drawer .close:hover{color:var(--ink); border-color:var(--muted)}
+  .drawer .close:hover{color:var(--ink); border-color:var(--muted); transform: rotate(90deg)}
   .drawer .dimpact{font-family:"IBM Plex Mono",monospace; font-size:38px; font-weight:600; letter-spacing:-.02em; margin-top:6px; color:var(--ink)}
   .drawer .dimpact .cur{color:var(--gold); font-size:.5em; vertical-align:.3em}
   .dbody{overflow-y:auto; padding:8px 28px 40px; flex:1}
@@ -147,6 +155,46 @@
   .reveal{opacity:0; transform:translateY(14px); animation:rise .7s forwards}
   @keyframes rise{to{opacity:1; transform:none}}
   @media(max-width:920px){.hero{grid-template-columns:1fr; gap:30px} .confbar{display:none}}
+
+  /* Upload modal */
+  .upload-btn{font-family:inherit; font-weight:600; font-size:13px; color:var(--ink);
+    background:#fff; border:1px solid var(--line); border-radius:10px; padding:10px 16px;
+    cursor:pointer; display:flex; align-items:center; gap:8px; transition:.15s}
+  .upload-btn:hover{border-color:var(--gold); box-shadow:var(--shadow-sm); transform:translateY(-1px)}
+  .upload-btn svg{width:16px;height:16px}
+  .ds-badge{font-size:10px; font-weight:700; padding:3px 8px; border-radius:6px; margin-left:4px; letter-spacing:.04em}
+  .ds-badge.demo{color:var(--green-deep); background:var(--green-soft)}
+  .ds-badge.custom{color:#7c3aed; background:#ede9fe}
+  .upload-modal{position:fixed; inset:0; z-index:60; display:none; align-items:center; justify-content:center;
+    background:rgba(40,38,30,.4); backdrop-filter:blur(3px)}
+  .upload-modal.show{display:flex}
+  .upload-card{background:#fff; border-radius:18px; box-shadow:var(--shadow-lg); padding:32px; width:min(520px,92vw);
+    position:relative; animation:rise .4s cubic-bezier(0.16,1,0.3,1)}
+  .upload-card h3{font-family:"Fraunces",serif; font-size:20px; font-weight:600; color:var(--ink); margin-bottom:6px}
+  .upload-card .desc{font-size:13.5px; color:var(--muted); margin-bottom:22px}
+  .upload-card .close-modal{position:absolute; top:18px; right:18px; background:#fff; border:1px solid var(--line);
+    color:var(--muted); width:30px;height:30px;border-radius:8px; cursor:pointer; font-size:14px; transition:.15s}
+  .upload-card .close-modal:hover{color:var(--ink); border-color:var(--muted)}
+  .file-row{display:flex; align-items:center; gap:12px; padding:14px 16px; border:1.5px dashed var(--line);
+    border-radius:12px; margin-bottom:12px; background:var(--paper-2); transition:.2s}
+  .file-row:hover{border-color:var(--gold)}
+  .file-row.has-file{border-style:solid; border-color:var(--green); background:var(--green-soft)}
+  .file-row .fl{font-size:13px; font-weight:600; color:var(--ink); min-width:90px}
+  .file-row .fname{font-size:12px; color:var(--muted); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .file-row input[type=file]{display:none}
+  .file-row .pick{font-size:12px; color:var(--green-deep); font-weight:600; cursor:pointer; padding:6px 12px;
+    border:1px solid var(--green); border-radius:8px; background:#fff; transition:.15s; white-space:nowrap}
+  .file-row .pick:hover{background:var(--green-soft)}
+  .upload-actions{display:flex; gap:12px; margin-top:20px}
+  .upload-actions button{flex:1; font-family:inherit; font-weight:600; font-size:13.5px; padding:12px; border-radius:10px;
+    cursor:pointer; transition:.15s; border:1px solid transparent}
+  .upload-actions .submit-upload{background:linear-gradient(180deg,var(--green),var(--green-deep)); color:#fff;
+    box-shadow:0 8px 18px -8px rgba(15,157,107,.55)}
+  .upload-actions .submit-upload:hover{transform:translateY(-1px)}
+  .upload-actions .submit-upload:disabled{opacity:.5; cursor:not-allowed; transform:none}
+  .upload-actions .reset-ds{background:#fff; color:var(--muted); border-color:var(--line)}
+  .upload-actions .reset-ds:hover{color:#be123c; border-color:#fbcfd8}
+  .upload-err{font-size:12px; color:#be123c; margin-top:10px; display:none}
 </style>
 </head>
 <body class="bg-atmos">
@@ -157,14 +205,33 @@
       <path d="M16 11 C13 14 13 17 16 21 C19 17 19 14 16 11Z" fill="var(--t-overage)"/>
       <circle cx="16" cy="24" r="1.5" fill="var(--gold)"/>
     </svg>
-    <div><h1>LeakSentry</h1><div class="sub">Revenue Leakage Audit</div></div>
+    <div><h1>RevVeritas</h1><div class="sub">Revenue Leakage Audit</div></div>
   </a>
   <div class="spacer"></div>
   <div class="engine" id="engine"><span class="dot"></span><span id="engineLabel">connecting…</span></div>
+  <span class="ds-badge demo" id="dsBadge">DEMO DATA</span>
   <div class="userbox"><span class="avatar" id="avatar">G</span><span id="userName">Guest</span>
     <button class="signout" onclick="signout()">Sign out</button></div>
+  <button class="upload-btn" onclick="openUpload()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Upload Dataset</button>
   <button class="run" id="runBtn" onclick="runAudit()"><span class="pulse"></span> Run Audit</button>
 </header>
+
+<!-- Upload modal -->
+<div class="upload-modal" id="uploadModal">
+  <div class="upload-card">
+    <button class="close-modal" onclick="closeUpload()">✕</button>
+    <h3>Upload your dataset</h3>
+    <div class="desc">Upload three CSV files — contracts, invoices, and usage — and the audit will run against your data instead of the demo set.</div>
+    <div class="file-row" id="fr-contracts"><span class="fl">Contracts</span><span class="fname" id="fn-contracts">No file selected</span><label class="pick">Browse<input type="file" accept=".csv" onchange="pickFile('contracts',this)"></label></div>
+    <div class="file-row" id="fr-invoices"><span class="fl">Invoices</span><span class="fname" id="fn-invoices">No file selected</span><label class="pick">Browse<input type="file" accept=".csv" onchange="pickFile('invoices',this)"></label></div>
+    <div class="file-row" id="fr-usage"><span class="fl">Usage</span><span class="fname" id="fn-usage">No file selected</span><label class="pick">Browse<input type="file" accept=".csv" onchange="pickFile('usage',this)"></label></div>
+    <div class="upload-err" id="uploadErr"></div>
+    <div class="upload-actions">
+      <button class="reset-ds" onclick="resetDataset()">Reset to demo data</button>
+      <button class="submit-upload" id="submitUpload" onclick="submitUpload()" disabled>Upload &amp; audit</button>
+    </div>
+  </div>
+</div>
 
 <div class="wrap">
   <section class="hero">
@@ -237,21 +304,83 @@ const fmt = n => '$'+Math.round(n).toLocaleString('en-US');
 const fmt2 = n => n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
 let DATA=null, FILTER='ALL';
 
-async function api(p,m='GET'){const r=await fetch(p,{method:m});if(!r.ok)throw new Error(await r.text());return r.json();}
+async function api(p,m='GET'){
+  const base = (window.location.port !== '8000' && window.location.port !== '8011' && window.location.port !== '') ? 'http://127.0.0.1:8000' : '';
+  const r=await fetch(base+p,{method:m});
+  if(!r.ok)throw new Error(await r.text());
+  return r.json();
+}
 
 function loadUser(){
-  let u='Guest'; try{ u=localStorage.getItem('leaksentry_user')||'Guest'; }catch(e){}
+  let u=null; try{ u=localStorage.getItem('revveritas_user'); }catch(e){}
+  if(!u){ location.href='/signin'; return; }
   document.getElementById('userName').textContent=u;
   document.getElementById('avatar').textContent=(u[0]||'G').toUpperCase();
 }
-function signout(){ try{ localStorage.removeItem('leaksentry_user'); }catch(e){} location.href='/'; }
+function signout(){ try{ localStorage.removeItem('revveritas_user'); }catch(e){} location.href='/'; }
 
 async function init(){
   loadUser();
   try{const h=await api('/api/health');
     document.getElementById('engineLabel').textContent = h.judgment_engine==='gemini' ? ('Gemini · '+h.model) : 'Heuristic judge (no API key)';
     document.getElementById('engine').classList.toggle('heur', h.judgment_engine!=='gemini');
+    updateDsBadge(h.dataset);
   }catch(e){document.getElementById('engineLabel').textContent='offline';}
+}
+function updateDsBadge(ds){
+  const b=document.getElementById('dsBadge');
+  b.textContent=ds==='custom'?'CUSTOM DATA':'DEMO DATA';
+  b.className='ds-badge '+(ds==='custom'?'custom':'demo');
+}
+
+// ---- Upload modal ----
+const uploadFiles={contracts:null,invoices:null,usage:null};
+function openUpload(){document.getElementById('uploadModal').classList.add('show');}
+function closeUpload(){document.getElementById('uploadModal').classList.remove('show'); document.getElementById('uploadErr').style.display='none';}
+function pickFile(kind,input){
+  const f=input.files[0]; if(!f)return;
+  uploadFiles[kind]=f;
+  document.getElementById('fn-'+kind).textContent=f.name;
+  document.getElementById('fr-'+kind).classList.add('has-file');
+  document.getElementById('submitUpload').disabled=!(uploadFiles.contracts&&uploadFiles.invoices&&uploadFiles.usage);
+}
+async function submitUpload(){
+  const btn=document.getElementById('submitUpload'); btn.disabled=true; btn.textContent='Uploading…';
+  const errEl=document.getElementById('uploadErr'); errEl.style.display='none';
+  const base=(window.location.port!=='8000'&&window.location.port!=='8011'&&window.location.port!=='') ? 'http://127.0.0.1:8000':'';
+  try{
+    const fd=new FormData();
+    fd.append('contracts',uploadFiles.contracts);
+    fd.append('invoices',uploadFiles.invoices);
+    fd.append('usage',uploadFiles.usage);
+    const r=await fetch(base+'/api/upload-dataset',{method:'POST',body:fd});
+    if(!r.ok){const t=await r.text(); throw new Error(t);}
+    const res=await r.json();
+    updateDsBadge('custom');
+    toast(res.message);
+    closeUpload();
+    runAudit();
+  }catch(e){
+    errEl.textContent='Upload failed: '+e.message; errEl.style.display='block';
+  }finally{ btn.disabled=false; btn.textContent='Upload & audit'; }
+}
+async function resetDataset(){
+  try{
+    const r=await api('/api/reset-dataset','POST');
+    updateDsBadge('demo');
+    toast(r.message);
+    closeUpload();
+    // Clear current data and headline
+    DATA=null; FILTER='ALL';
+    document.getElementById('headline').innerHTML='<span class="cur">$</span>0';
+    document.getElementById('headlineSub').textContent='Run an audit to reconcile the three sources and surface silently-lost revenue.';
+    document.getElementById('cCustomers').textContent='—';
+    document.getElementById('cConfirmed').textContent='—';
+    document.getElementById('cReview').textContent='—';
+    document.getElementById('cNoise').textContent='—';
+    document.getElementById('bars').innerHTML='';
+    document.getElementById('rows').innerHTML='<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--faint)">No audit run yet — click <b style="color:var(--green-deep)">Run Audit</b>.</td></tr>';
+  }catch(e){alert('Reset failed: '+e.message);}
 }
 function countUp(el,target){
   const dur=1100,t0=performance.now();
@@ -296,7 +425,7 @@ function renderRows(){
   if(!list.length){tb.innerHTML='<tr><td colspan="6" style="padding:30px;text-align:center;color:var(--faint)">No findings in this view.</td></tr>';return;}
   tb.innerHTML=list.map((f,i)=>{
     const t=TYPE[f.leak_type];
-    return `<tr onclick="openDrawer('${f.signature}')">
+    return `<tr onclick="openDrawer('${f.signature}')" style="animation: trReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.03}s both; opacity: 0; transform: translateY(8px);">
       <td class="rank mono">${String(i+1).padStart(2,'0')}</td>
       <td><div class="cust">${f.customer_id}</div><div class="prod">${f.contract_id} · ${f.product}</div></td>
       <td><span class="pill" style="color:${t.c};background:${t.c}1a"><span class="swatch" style="background:${t.c}"></span>${t.l}</span></td>
